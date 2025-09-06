@@ -4,6 +4,7 @@ This module performs a handful of sanity checks on a :class:`~catma_core.model.C
 """
 
 from .model import Category, Morphism, Obj
+from .model import Category
 
 def check_objects_exist(cat: Category) -> list[str]:
     errs = []
@@ -74,3 +75,6 @@ def is_valid_category(data) -> bool:
 
     return len(validate(cat)) == 0
 
+def is_valid_category(cat: Category) -> bool:
+    """Return True if the category passes all validation checks."""
+    return len(validate(cat)) == 0

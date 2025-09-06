@@ -13,6 +13,8 @@ if uploaded:
     st.write(f"Category: **{cat.name}**")
     errs = validate(cat)
     if errs:
-        st.error("Validation issues:"); [st.write(f"- {e}") for e in errs]
+        with st.error("Validation issues:"):
+            for e in errs:
+                st.write(f"- {e}")
     img = render_graph(cat, out_path="/tmp/catma_graph")
     st.image(img, caption="Rendered Category")
