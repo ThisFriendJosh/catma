@@ -10,10 +10,13 @@ pip install -e .
 
 ## Usage
 
-```python
-from catma_core.io_yaml import read_catmaml
-from catma_core.validate import is_valid_category
+Load a YAML description of a category and run the basic validator:
 
-cfg = read_catmaml("examples/ak_fsio.yaml")
-print(is_valid_category(cfg))
+```python
+from catma_core.io_yaml import load_yaml
+from catma_core.validate import validate
+
+cat = load_yaml("catma.yaml")
+errors = validate(cat)
+print(errors or "Category is valid")
 ```
