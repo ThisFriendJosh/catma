@@ -16,3 +16,8 @@ def validate(cat: Category) -> list[str]:
     errs += check_objects_exist(cat)
     errs += check_identities(cat)
     return errs
+
+
+def is_valid_category(cat: Category) -> bool:
+    """Return True if the category passes all validation checks."""
+    return len(validate(cat)) == 0

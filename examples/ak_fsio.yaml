@@ -1,4 +1,12 @@
-{
-  "objects": [{"name": "A"}, {"name": "B"}],
-  "morphisms": [{"name": "f", "source": "A", "target": "B"}]
-}
+---
+objects:
+  - id: A
+    labels: [source]
+  - id: B
+    labels: [target]
+morphisms:
+  - id: f
+    src: A
+    dst: B
+    kind: f
+    attrs: {weight: 1}
