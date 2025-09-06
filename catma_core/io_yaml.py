@@ -1,3 +1,14 @@
+"""Simple YAML helpers used throughout the examples and tests.
+
+Two sets of helpers are provided:
+
+``load_yaml``/``dump_yaml`` operate on the :class:`~catma_core.model.Category`
+dataclasses, while ``read_catmaml``/``write_catmaml`` simply return or accept
+plain ``dict`` objects.  The latter mirrors the very lightweight JSON/YAML
+examples shipped with the training repository and keeps the public API stable
+for the tests.
+"""
+
 import yaml
 from .model import Obj, Morphism, Category
 
@@ -21,3 +32,21 @@ def dump_yaml(cat: Category, path: str) -> None:
     }
     with open(path, "w", encoding="utf-8") as f:
         yaml.safe_dump(y, f, sort_keys=False)
+
+
+def read_catmaml(path: str) -> dict:
+    """Read a Catma configuration file and return the raw mapping.
+
+    The function is intentionally lightweight and performs no validation – that
+    is delegated to :func:`catma_core.validate.is_valid_category`.
+    """
+
+    with open(path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def write_catmaml(data: dict, path: str) -> None:
+    """Write *data* to *path* in YAML format."""
+
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(data, f, sort_keys=False)

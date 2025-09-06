@@ -1,4 +1,8 @@
 {
   "objects": [{"name": "A"}, {"name": "B"}],
-  "morphisms": [{"name": "f", "source": "A", "target": "B"}]
+  "morphisms": [
+    {"name": "id_A", "source": "A", "target": "A", "kind": "id"},
+    {"name": "id_B", "source": "B", "target": "B", "kind": "id"},
+    {"name": "f", "source": "A", "target": "B", "kind": "f"}
+  ]
 }
