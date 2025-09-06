@@ -1,0 +1,18 @@
+catma/
+  pyproject.toml
+  catma_core/
+    __init__.py
+    model.py          # objects, morphisms, functors (stubs)
+    validate.py       # basic checks
+    io_yaml.py        # read/write CatmaML
+    render.py         # Graphviz render
+  catma_api/
+    __init__.py
+    main.py           # FastAPI (optional for later)
+  catma_ui/
+    app.py            # Streamlit quick UI
+  examples/
+    ak_fsio.yaml
+  tests/
+    test_parse.py
+README.md
