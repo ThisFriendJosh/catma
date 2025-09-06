@@ -1,0 +1,27 @@
+---
+version: 0.1
+category: FSIO_MISO
+objects:
+  - id: Actor.Flynn
+    labels: [actor, person]
+  - id: Org.DHS.CISA
+    labels: [org, gov]
+  - id: Op.Q
+    labels: [operation]
+morphisms:
+  - id: m1
+    src: Org.DHS.CISA
+    dst: Op.Q
+    kind: influences
+    attrs: {weight: 0.6, evidence: "report:XYZ"}
+  - id: m2
+    src: Op.Q
+    dst: Actor.Flynn
+    kind: frames
+    attrs: {weight: 0.8}
+rules:
+  require_identities: true
+  allow_composition_on: [influences, frames]
+tags:
+  - key: epoch
+    value: 2016-2025
