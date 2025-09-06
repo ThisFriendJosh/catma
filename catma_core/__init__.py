@@ -1,14 +1,22 @@
-"""Core functionality for Catma."""
+"""Core functionality for Catma.
 
-from .model import Object, Morphism, Functor
-from .io_yaml import read_catmaml, write_catmaml
-from .validate import is_valid_category
+This package exposes the primary data structures and helpers used
+throughout the project.  Earlier iterations of the library provided
+``read_catmaml`` and ``is_valid_category`` helper functions which have
+since been replaced with the more explicit ``load_yaml`` and
+``validate`` functions.  The exports below mirror the current API so
+that consumers can simply import from :mod:`catma_core`.
+"""
+
+from .model import Obj, Morphism, Category
+from .io_yaml import load_yaml, dump_yaml
+from .validate import validate
 
 __all__ = [
-    "Object",
+    "Obj",
     "Morphism",
-    "Functor",
-    "read_catmaml",
-    "write_catmaml",
-    "is_valid_category",
+    "Category",
+    "load_yaml",
+    "dump_yaml",
+    "validate",
 ]
