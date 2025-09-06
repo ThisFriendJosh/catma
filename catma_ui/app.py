@@ -1,16 +1,18 @@
-"""Minimal Streamlit UI."""
+import streamlit as st
+from catma_core.io_yaml import load_yaml
+from catma_core.validate import validate
+from catma_core.render import render_graph
 
-try:  # pragma: no cover - optional dependency
-    import streamlit as st
-except Exception:  # pragma: no cover
-    st = None
+st.title("CAT-MA Viewer v0.1")
 
-
-def main() -> None:
-    if st is None:
-        raise RuntimeError("streamlit is required to run the UI")
-    st.title("Catma UI")
-
-
-if __name__ == "__main__":  # pragma: no cover
-    main()
+uploaded = st.file_uploader("Upload CatmaML YAML", type=["yaml","yml"])
+if uploaded:
+    path = f"/tmp/{uploaded.name}"
+    with open(path, "wb") as f: f.write(uploaded.read())
+    cat = load_yaml(path)
+    st.write(f"Category: **{cat.name}**")
+    errs = validate(cat)
+    if errs:
+        st.error("Validation issues:"); [st.write(f"- {e}") for e in errs]
+    img = render_graph(cat, out_path="/tmp/catma_graph")
+    st.image(img, caption="Rendered Category")
