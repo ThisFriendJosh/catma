@@ -11,9 +11,9 @@ pip install -e .
 ## Usage
 
 ```python
-from catma_core.io_yaml import read_catmaml
+from catma_core.io_yaml import load_yaml
 from catma_core.validate import is_valid_category
 
-cfg = read_catmaml("examples/ak_fsio.yaml")
-print(is_valid_category(cfg))
+cat = load_yaml("examples/ak_fsio.yaml")
+print(is_valid_category(cat))
 ```
