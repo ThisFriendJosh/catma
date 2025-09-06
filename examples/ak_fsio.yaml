@@ -1,0 +1,4 @@
+{
+  "objects": [{"name": "A"}, {"name": "B"}],
+  "morphisms": [{"name": "f", "source": "A", "target": "B"}]
+}
