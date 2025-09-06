@@ -1,14 +1,14 @@
 """Core functionality for Catma."""
 
-from .model import Object, Morphism, Functor
-from .io_yaml import read_catmaml, write_catmaml
-from .validate import is_valid_category
+from .model import Obj, Morphism, Category
+from .io_yaml import load_yaml, dump_yaml
+from .validate import validate
 
 __all__ = [
-    "Object",
+    "Obj",
     "Morphism",
-    "Functor",
-    "read_catmaml",
-    "write_catmaml",
-    "is_valid_category",
+    "Category",
+    "load_yaml",
+    "dump_yaml",
+    "validate",
 ]
