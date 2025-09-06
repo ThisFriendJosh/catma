@@ -1,30 +1,33 @@
-"""Category-theory data structures (stubs)."""
-
 from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Dict, List, Tuple, Optional
 
-from dataclasses import dataclass
-from typing import Dict
+@dataclass(frozen=True)
+class Obj:
+    id: str
+    labels: Tuple[str, ...] = ()
 
-
-@dataclass
-class Object:
-    """A categorical object."""
-    name: str
-
-
-@dataclass
+@dataclass(frozen=True)
 class Morphism:
-    """A morphism between two objects."""
+    id: str
+    src: str
+    dst: str
+    kind: str
+    attrs: Dict[str, object] = field(default_factory=dict)
+
+@dataclass
+class Category:
     name: str
-    source: Object
-    target: Object
+    objects: Dict[str, Obj]
+    morphisms: Dict[str, Morphism]
 
+    def obj(self, oid: str) -> Obj:
+        return self.objects[oid]
 
-class Functor:
-    """Very small functor stub mapping object names."""
+    def hom(self, a: str, b: str) -> List[Morphism]:
+        return [m for m in self.morphisms.values() if m.src == a and m.dst == b]
 
-    def __init__(self, mapping: Dict[str, str]):
-        self.mapping = mapping
-
-    def __call__(self, obj: Object) -> Object:
-        return Object(self.mapping.get(obj.name, obj.name))
+    def compose(self, f: Morphism, g: Morphism, new_id: str) -> Morphism:
+        if f.dst != g.src:
+            raise ValueError("Cannot compose: codomain(f) != domain(g)")
+        return Morphism(id=new_id, src=f.src, dst=g.dst, kind=f"{f.kind}∘{g.kind}")
