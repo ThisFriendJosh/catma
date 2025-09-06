@@ -1,32 +1,23 @@
-"""YAML I/O for CatmaML."""
+import yaml
+from .model import Obj, Morphism, Category
 
-from pathlib import Path
-from typing import Any, Dict
+def load_yaml(path: str) -> Category:
+    with open(path, "r", encoding="utf-8") as f:
+        y = yaml.safe_load(f)
+    objs = {o["id"]: Obj(id=o["id"], labels=tuple(o.get("labels", []))) for o in y["objects"]}
+    morphs = {
+        m["id"]: Morphism(id=m["id"], src=m["src"], dst=m["dst"], kind=m["kind"], attrs=m.get("attrs", {}))
+        for m in y.get("morphisms", [])
+    }
+    return Category(name=y.get("category", "Unnamed"), objects=objs, morphisms=morphs)
 
-try:  # pragma: no cover - optional dependency
-    import yaml  # type: ignore
-except Exception:  # pragma: no cover
-    yaml = None  # type: ignore
-    import json
-else:
-    json = None  # type: ignore
-
-
-def read_catmaml(path: str | Path) -> Dict[str, Any]:
-    """Read CatmaML YAML into a dictionary."""
-    with open(path, "r", encoding="utf-8") as fh:
-        text = fh.read()
-    if yaml is not None:  # pragma: no branch
-        return yaml.safe_load(text) or {}
-    assert json is not None  # pragma: no cover
-    return json.loads(text)
-
-
-def write_catmaml(data: Dict[str, Any], path: str | Path) -> None:
-    """Write dictionary as CatmaML YAML."""
-    with open(path, "w", encoding="utf-8") as fh:
-        if yaml is not None:  # pragma: no branch
-            yaml.safe_dump(data, fh)
-        else:
-            assert json is not None  # pragma: no cover
-            json.dump(data, fh, indent=2)
+def dump_yaml(cat: Category, path: str) -> None:
+    y = {
+        "version": "0.1",
+        "category": cat.name,
+        "objects": [{"id": o.id, "labels": list(o.labels)} for o in cat.objects.values()],
+        "morphisms": [{"id": m.id, "src": m.src, "dst": m.dst, "kind": m.kind, "attrs": m.attrs}
+                      for m in cat.morphisms.values()],
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(y, f, sort_keys=False)
