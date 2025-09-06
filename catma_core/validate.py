@@ -1,4 +1,4 @@
-from .model import Category, Morphism
+from .model import Category
 
 def check_objects_exist(cat: Category) -> list[str]:
     errs = []
