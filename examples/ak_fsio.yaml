@@ -1,4 +1,11 @@
 ---
+version: 0.1
+category: AK_FSIO
+objects:
+  - id: A
+    labels: []
+  - id: B
+    labels: []
 objects:
   - id: A
     labels: [source]
@@ -8,5 +15,6 @@ morphisms:
   - id: f
     src: A
     dst: B
+    kind: morphism
     kind: f
     attrs: {weight: 1}
